@@ -33,13 +33,10 @@ public class PrintServlet extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html;charset=UTF-8");
 
-		String url ="";
-		String type ="";
-		String unitStr ="";
 		int unit = 0;
-		url = request.getParameter("url") == null ? "" : (String)request.getParameter("url");
-		type = request.getParameter("type") == null ? "" :(String)request.getParameter("type");
-		unitStr = request.getParameter("unit") == null ? "" :(String)request.getParameter("unit");	
+		String url = request.getParameter("url") == null ? "" : (String)request.getParameter("url");
+		String type = request.getParameter("type") == null ? "" :(String)request.getParameter("type");
+		String unitStr = request.getParameter("unit") == null ? "" :(String)request.getParameter("unit");	
 		if(!"".equals(unitStr)){
 			unit = Integer.parseInt(unitStr);
 		}
@@ -51,30 +48,35 @@ public class PrintServlet extends HttpServlet {
 	         
 	        if(200 == connection.getResponseCode()) { //연결가능한 URL 유효성 검증
 	        	Document doc = Jsoup.connect(url).get();
-	    		String content = "";
+	    		String content = doc.html();
 	    		if (type.equals("0")) {
-	    			//content = doc.text();//html 요소 제외
-	    			content = doc.html();
 	    			content = content.replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");                        
-	    		}else {
-	    			content = doc.html();
 	    		}
 	    		content.trim();
 	    		String result = "";
 	    		result = selectEngNum(content);
 	    		
 	    		int resultLen = result.length();
-	    		int quotient = 0;
-	    		int remainder = 0;
+	    		int q = 0;
+	    		int r = 0;
 	    		if(resultLen > 0 && unit > 0) {
-	    			quotient = resultLen / unit;
-	    			remainder = resultLen % unit;
+	    			q = resultLen / unit;
+	    			r = resultLen % unit;
 	    		}
+	    		String quotient = "";
+	    		String remainder = "";
+	    		if(resultLen > 0 && r > 0) {
+	    			quotient = result.substring(0, resultLen-r);
+		    		remainder = result.substring(resultLen-r+1);
+	    		}
+	    		
 	    		request.setAttribute("type", type);
 	    		request.setAttribute("content", content);
 	    		request.setAttribute("result", result);
 	    		request.setAttribute("quotient", quotient);		
 	    		request.setAttribute("remainder", remainder);
+	    		request.setAttribute("q", q);		
+	    		request.setAttribute("r", r);
 	    		
 	    		ServletContext context = getServletContext();
 	    		RequestDispatcher dispatcher = context.getRequestDispatcher("/print.jsp");

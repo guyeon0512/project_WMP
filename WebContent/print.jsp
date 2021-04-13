@@ -11,9 +11,11 @@
   table {
     width: 95%;
     border: 1px solid #444444;
+    padding: 5px;
   }
-  th, td {
+  td {
     border: 1px solid #444444;
+    padding: 5px;
   }
 </style>
 </head>
@@ -30,16 +32,16 @@ String type = request.getParameter("type");
 <div>
 <table style="word-break:break-all">
 <tr><td colspan="2" style="text-align:center">출력</td></tr>
-<tr><td colspan="2">■ 교차 출력</td></tr>
+<tr><td colspan="2"  style="background-color:yellow;">■ 교차 출력</td></tr>
 <tr><td width="150px">■ 문자열</td>
 <td>
 	<c:if test="${ type == 0 }">${content}</c:if>
 	<c:if test="${ type != 0 }"><c:out value="${content}" escapeXml="true"/></c:if>
 </td></tr>
 <tr><td width="150px">■ 결과값</td><td>${result}</td></tr>
-<tr><td colspan="2">■ 출력 결과</td></tr>
-<tr><td width="150px">■ 몫</td><td>${quotient}</td></tr>
-<tr><td width="150px">■ 나머지</td><td>${remainder}</td></tr>
+<tr><td colspan="2"  style="background-color:yellow;">■ 출력 결과</td></tr>
+<tr><td width="150px">■ 몫(${q})</td><td>${quotient}</td></tr>
+<tr><td width="150px">■ 나머지(${r})</td><td>${remainder}</td></tr>
 </table>
 </div>
 </body>

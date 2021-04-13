@@ -4,18 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
-<script>
-	function check() {		
-		/* if (inputScreen.unit.value  < 1 ) {
-			alert("출력단위 묶음은 0보다 큰 값을 기입하세요.");
-			document.getElementById("unit").focus();
-			return false;
-		}	 */	
-	}
-</script>
+
 <style>
   table,td {
     border: 1px solid #444444;
+    padding: 5px;
   }
   #td1 {
     width:120px;
@@ -29,7 +22,7 @@
 </head>
 <body>
 <div>
-<form action="/PrintServlet" method="post" onsubmit = "return check()" name = "inputScreen">
+<form action="/PrintServlet" method="post" name = "inputScreen">
 <table>
 <tr><td colspan="2" style="text-align:center">입력</td></tr>
 <tr>
@@ -47,7 +40,7 @@
 </tr>
 <tr>
 <td id="td1">출력 단위 묶음</td>
-<td id="td2"><input type ="number" name ="unit" id ="unit"/></td>
+<td id="td2"><input type ="number" name ="unit" id ="unit" min="0" max="1000000000"/></td>
 </tr>
 <tr><td colspan="2" align="right"><input type="submit" value="출력" id="btn"></td></tr>
 </table>
